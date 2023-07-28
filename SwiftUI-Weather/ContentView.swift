@@ -11,6 +11,9 @@ struct ContentView: View {
     
     @State private var isNight = false
     
+    var data : [WeatherDataObj] = WeatherData.data
+    
+   
     
     var body: some View {
         ZStack {
@@ -20,18 +23,18 @@ struct ContentView: View {
                 CityTextView(cityName: "Jaipur, India")
                 MainWeatherView(imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill", temperature: isNight ? 26 : 32)
                 
+                
+                
                 HStack(spacing: 20) {
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temperature: 32)
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "sun.max.fill", temperature: 30)
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "wind.snow", temperature: 17)
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "snow", temperature: 10)
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temperature: 32)
-
+                    ForEach(data) { value in
+                        WeatherDayView(dayOfWeek: value.dayName, imageName: value.imageName, temperature: value.temperature)
+                                }
                 }
                 Spacer()
-//                WeatherButton(title: "Change Day Time", textColor: .blue, backgroundColor: .white)
+
                 Button {
                     isNight.toggle()
+                    print(data)
                 } label: {
                     Text("Change Day Time")
                         .frame(width: 280, height: 50 )
