@@ -16,37 +16,44 @@ struct ContentView: View {
    
     
     var body: some View {
-        ZStack {
-            BackgroundView(isNight: $isNight)
-            VStack {
-                
-                CityTextView(cityName: "Jaipur, India")
-                MainWeatherView(imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill", temperature: isNight ? 26 : 32)
-                
-                
-                
-                HStack(spacing: 20) {
-                    ForEach(data) { value in
-                        WeatherDayView(dayOfWeek: value.dayName, imageName: value.imageName, temperature: value.temperature)
-                                }
+        NavigationStack {
+            ZStack {
+                BackgroundView(isNight: $isNight)
+                VStack {
+                    
+                    CityTextView(cityName: "Jaipur, India")
+                    MainWeatherView(imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill", temperature: isNight ? 26 : 32)
+                    HStack(spacing: 20) {
+                        ForEach(data) { value in
+                            WeatherDayView(dayOfWeek: value.dayName, imageName: value.imageName, temperature: value.temperature)
+                        }
+                    }
+                    Spacer()
+    //                NavigationStack{
+    //                    NavigationLink {
+    //                        SecondScreen()
+    //                    } label: {
+    //                        Text("Click Me")
+    //                    }
+    //                }
+                    Button {
+                        isNight.toggle()
+                        print(data)
+                    }
+                    label: {
+                        Text("Change Day Time")
+                            .frame(width: 280, height: 50 )
+                            .foregroundColor(.blue)
+                            .font(.system(size: 20, weight: .bold, design: .default))
+                            .background(.white)
+                            .cornerRadius(10)
+                            
+                    }
+                    Spacer()
                 }
-                Spacer()
-
-                Button {
-                    isNight.toggle()
-                    print(data)
-                } label: {
-                    Text("Change Day Time")
-                        .frame(width: 280, height: 50 )
-                        .foregroundColor(.blue)
-                        .font(.system(size: 20, weight: .bold, design: .default))
-                        .background(.white)
-                        .cornerRadius(10)
-                        
-                }
-                Spacer()
             }
         }
+        
     }
 }
 
